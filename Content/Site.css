@@ -1,0 +1,34 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+:root {
+    --main-color: #5ea3d0;
+    --secondary-color: white;
+    --main-text-color: #3e5869;
+    --secondary-text-color: #b0c7d6;
+    --send-message-form: #F5F5F5;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui;
+    font-weight: 200;
+    color: #3e5869;
+}
