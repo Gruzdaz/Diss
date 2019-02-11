@@ -1,0 +1,11 @@
+﻿@model Diss.ViewModels.EventView
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<h3>@Model.Name</h3>
+<a href="@Url.Action("Chat", "Events")">@Model.Name</a>

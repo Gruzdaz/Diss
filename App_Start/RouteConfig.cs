@@ -14,9 +14,15 @@ namespace Diss
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default",
+                name: "Events",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller="default", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller="events", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Chat",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "events", action = "Chat", id = UrlParameter.Optional }
             );
         }
     }

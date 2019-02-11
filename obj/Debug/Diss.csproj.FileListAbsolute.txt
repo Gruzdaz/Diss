@@ -51,6 +51,8 @@ C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\roslyn\vbc.rsp
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\roslyn\VBCSCompiler.exe
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\Antlr3.Runtime.dll
+C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\EntityFramework.dll
+C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\EntityFramework.SqlServer.dll
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\Newtonsoft.Json.dll
@@ -63,6 +65,8 @@ C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\System.Web.WebPages.dll
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\System.Web.WebPages.Razor.dll
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\WebGrease.dll
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\Antlr3.Runtime.pdb
+C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\EntityFramework.xml
+C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\EntityFramework.SqlServer.xml
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\Newtonsoft.Json.pdb
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\Newtonsoft.Json.xml
@@ -73,7 +77,10 @@ C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\System.Web.Razor.xml
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\System.Web.WebPages.xml
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\System.Web.WebPages.Deployment.xml
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\bin\System.Web.WebPages.Razor.xml
+C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.Migrations.Events.resources
+C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.csproj.GenerateResource.cache
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.csproj.CoreCompileInputs.cache
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.csproj.CopyComplete
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.dll
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.pdb
+C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.csprojAssemblyReference.cache
