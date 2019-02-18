@@ -15,14 +15,26 @@ namespace Diss
 
             routes.MapRoute(
                 name: "Events",
-                url: "{controller}/{action}/{id}",
+                url: "",
                 defaults: new { controller="events", action = "Index", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(
                 name: "Chat",
-                url: "{controller}/{action}/{id}",
+                url: "chat/{eventId}",
                 defaults: new { controller = "events", action = "Chat", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "EventsJson",
+                url: "events",
+                defaults: new { controller = "events", action = "Events" }
+            );
+
+            routes.MapRoute(
+                name: "ChatID",
+                url: "chatID",
+                defaults: new { controller = "events", action = "ChatID" }
             );
         }
     }

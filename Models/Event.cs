@@ -8,5 +8,6 @@ namespace Diss.Models
         public string Name { get; set; }
         public DateTime Start { get; set; }
         public DateTime Finish { get; set; }
+        public int ChatID { get; set; }
     }
 }
