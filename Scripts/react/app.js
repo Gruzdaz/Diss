@@ -17,14 +17,15 @@ class App extends React.Component {
         this.state = {
             messages: [],
             events: [],
-            roomId: 0
+            roomId: 0,
+            title : ""
         };
         this.sendMessage = this.sendMessage.bind(this);
     }
 
     componentDidMount() {
         fetch('http://localhost:57971/events').then(res => res.json()).then(events =>
-            this.setState({ events }));
+            this.setState({ events: events, title: events.find(item => item.ID === Number(this.props.match.params.eventId)).Name }));
         const chatManager = new Chatkit.ChatManager({
             instanceLocator: instanceLocator,
             userId: userId,
@@ -98,7 +99,7 @@ class App extends React.Component {
     render() {
         return (
             <div className="app">
-                <Title />
+                <p className="title"> {this.state.title}</p>
                 <MessageList
                     roomId={this.state.roomId}
                     messages={this.state.messages}
@@ -109,10 +110,6 @@ class App extends React.Component {
             </div>
         );
     }
-}
-
-function Title() {
-    return <p className="title">Lakers vs Boston</p>
 }
 
 ReactDOM.render(

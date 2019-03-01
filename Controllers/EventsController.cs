@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Microsoft.AspNet.Identity;
 
 namespace Diss.Controllers
 {
@@ -19,7 +20,8 @@ namespace Diss.Controllers
                 ID = e.ID,
                 Name = e.Name,
                 Start = e.Start,
-                Finish = e.Finish
+                Finish = e.Finish,
+                Username = System.Web.HttpContext.Current.User.Identity.Name
             });
 
             return View(model);

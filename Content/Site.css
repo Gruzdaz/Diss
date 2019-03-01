@@ -31,4 +31,9 @@ html, body {
     font-family: system-ui;
     font-weight: 200;
     color: #3e5869;
+    background-image: url('http://getwallpapers.com/wallpaper/full/2/4/8/405199.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
 }

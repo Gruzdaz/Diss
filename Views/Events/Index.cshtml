@@ -5,7 +5,35 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@Model.Last().Username
+
 @foreach (var e in Model)
 {
-    <a href="@Url.Action("Chat", "Events", new { eventId = e.ID })">@e.Name</a>
+    <div class="card" style="width: 18rem; display: inline-block;">
+        <img class="card-img-bottom" src="https://usatthebiglead.files.wordpress.com/2018/07/lebron-kd-steph-ad.png" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">@e.Name</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a class="btn btn-primary view_btn" href="@Url.Action("Chat", "Events", new { eventId = e.ID })">Find a chat</a>
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script>
+        $(function () {
+            if ('@TempData["message"]' == "Logged In") {
+                toastr["success"]("Logged In Successfully!");
+            }
+            else if ('@TempData["message"]' == "Registered") {
+                toastr["success"]("Registered Successfully!");
+            }
+            else if ('@TempData["message"]' == "Logout") {
+                toastr["success"]("Logged Out Successfully!");
+            }
+        })
+    </script>
+}
+@section styles {
+    <link href="~/Content/css/index.css" rel="stylesheet" />
 }
