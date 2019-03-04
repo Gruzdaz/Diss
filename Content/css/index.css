@@ -3,3 +3,13 @@
     background-color: #FFC312;
 }
 
+.main {
+    background-color: rgba(0,0,0,0.8) !important;
+    padding-bottom: 10px;
+}
+
+.card {
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+}

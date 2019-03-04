@@ -11,6 +11,8 @@ namespace Diss
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            routes.MapMvcAttributeRoutes();
+
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
@@ -38,27 +40,15 @@ namespace Diss
             );
 
             routes.MapRoute(
-                name: "Login_GET",
+                name: "Login",
                 url: "login",
-                defaults: new { controller = "users", action = "Login_GET" }
+                defaults: new { controller = "users", action = "Login" }
             );
 
             routes.MapRoute(
-                name: "Login_POST",
-                url: "login-post",
-                defaults: new { controller = "users", action = "Login_POST" }
-            );
-
-            routes.MapRoute(
-                name: "Register_GET",
+                name: "Registe",
                 url: "register",
-                defaults: new { controller = "users", action = "Register_GET" }
-            );
-
-            routes.MapRoute(
-                name: "Register_POST",
-                url: "register-post",
-                defaults: new { controller = "users", action = "Register_POST" }
+                defaults: new { controller = "users", action = "Register" }
             );
 
             routes.MapRoute(

@@ -3,21 +3,16 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Web;
-using System.Web.Http;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 
 namespace Diss.Controllers
 {
     public class UsersController : Controller
     {
-        [System.Web.Http.HttpGet]
-        public ActionResult Login_GET()
+        [HttpGet]
+        public ActionResult Login()
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -26,8 +21,8 @@ namespace Diss.Controllers
             return View(new ViewModels.LoginView { });
         }
 
-        [System.Web.Http.HttpPost]
-        public ActionResult Login_POST(ViewModels.LoginView model)
+        [HttpPost]
+        public ActionResult Login(ViewModels.LoginView model)
         {
             if (ModelState.IsValid)
             {
@@ -47,11 +42,11 @@ namespace Diss.Controllers
                 }
             }
             TempData["message"] = "wrong";
-            return View("Login_GET");
+            return View();
         }
 
-        [System.Web.Http.HttpGet]
-        public ActionResult Register_GET()
+        [HttpGet]
+        public ActionResult Register()
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -60,8 +55,8 @@ namespace Diss.Controllers
             return View(new ViewModels.RegisterView { });
         }
 
-        [System.Web.Http.HttpPost]
-        public ActionResult Register_POST(ViewModels.RegisterView model)
+        [HttpPost]
+        public ActionResult Register(ViewModels.RegisterView model)
         {
             var store = new UserStore<AppUser>(new MyDbContext());
             AppUserManager _userManager = new AppUserManager(store);
@@ -79,12 +74,11 @@ namespace Diss.Controllers
             }
             else
             {
-
-                return View("Register_GET", new ViewModels.RegisterView { ErrorMessage = result.Errors.First() });
+                TempData["message"] = "wrong";
+                return View(new ViewModels.RegisterView { ErrorMessage = result.Errors.First() });
             }
         }
 
-        [System.Web.Http.HttpGet]
         public ActionResult Logout()
         {
             HttpContext.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);

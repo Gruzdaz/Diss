@@ -615,8 +615,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Events\Chat.cshtml" />
-    <Content Include="Views\Users\Login_GET.cshtml" />
-    <Content Include="Views\Users\Register_GET.cshtml" />
+    <Content Include="Views\Users\Login.cshtml" />
+    <Content Include="Views\Users\Register.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
