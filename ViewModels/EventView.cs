@@ -11,6 +11,7 @@ namespace Diss.ViewModels
         public string Name { get; set; }
         public DateTime Start { get; set; }
         public DateTime Finish { get; set; }
-        public String Username { get; set; }
+        public string Username { get; set; }
+        public int ChatID { get; set; }
     }
 }

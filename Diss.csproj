@@ -594,10 +594,52 @@
     <Compile Include="Migrations\201902181300424_identity.Designer.cs">
       <DependentUpon>201902181300424_identity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903042032313_IDsArray.cs" />
+    <Compile Include="Migrations\201903042032313_IDsArray.Designer.cs">
+      <DependentUpon>201903042032313_IDsArray.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903071809555_e.cs" />
+    <Compile Include="Migrations\201903071809555_e.Designer.cs">
+      <DependentUpon>201903071809555_e.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903080020273_chat.cs" />
+    <Compile Include="Migrations\201903080020273_chat.Designer.cs">
+      <DependentUpon>201903080020273_chat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903080036437_chatID.cs" />
+    <Compile Include="Migrations\201903080036437_chatID.Designer.cs">
+      <DependentUpon>201903080036437_chatID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903080043063_testy.cs" />
+    <Compile Include="Migrations\201903080043063_testy.Designer.cs">
+      <DependentUpon>201903080043063_testy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903080047067_why.cs" />
+    <Compile Include="Migrations\201903080047067_why.Designer.cs">
+      <DependentUpon>201903080047067_why.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903080051012_plz-work.cs" />
+    <Compile Include="Migrations\201903080051012_plz-work.Designer.cs">
+      <DependentUpon>201903080051012_plz-work.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903080055277_Chatsy.cs" />
+    <Compile Include="Migrations\201903080055277_Chatsy.Designer.cs">
+      <DependentUpon>201903080055277_Chatsy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903080058521_ChatRooms.cs" />
+    <Compile Include="Migrations\201903080058521_ChatRooms.Designer.cs">
+      <DependentUpon>201903080058521_ChatRooms.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903081205471_addChatroomId.cs" />
+    <Compile Include="Migrations\201903081205471_addChatroomId.Designer.cs">
+      <DependentUpon>201903081205471_addChatroomId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppUserManager.cs" />
     <Compile Include="Models\AppRole.cs" />
     <Compile Include="Models\AppUser.cs" />
+    <Compile Include="Models\Chat.cs" />
+    <Compile Include="Models\ChatRoom.cs" />
     <Compile Include="Models\MyDbContext.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -626,6 +668,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ChatRoom\" />
     <Folder Include="Views\LoginView\" />
   </ItemGroup>
   <ItemGroup>
@@ -643,6 +686,36 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902181300424_identity.resx">
       <DependentUpon>201902181300424_identity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903042032313_IDsArray.resx">
+      <DependentUpon>201903042032313_IDsArray.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903071809555_e.resx">
+      <DependentUpon>201903071809555_e.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903080020273_chat.resx">
+      <DependentUpon>201903080020273_chat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903080036437_chatID.resx">
+      <DependentUpon>201903080036437_chatID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903080043063_testy.resx">
+      <DependentUpon>201903080043063_testy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903080047067_why.resx">
+      <DependentUpon>201903080047067_why.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903080051012_plz-work.resx">
+      <DependentUpon>201903080051012_plz-work.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903080055277_Chatsy.resx">
+      <DependentUpon>201903080055277_Chatsy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903080058521_ChatRooms.resx">
+      <DependentUpon>201903080058521_ChatRooms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903081205471_addChatroomId.resx">
+      <DependentUpon>201903081205471_addChatroomId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

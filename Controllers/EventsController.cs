@@ -36,15 +36,23 @@ namespace Diss.Controllers
         public ActionResult Events()
         {
             MyDbContext myDbContext = new MyDbContext();
-            return Json(myDbContext.Events, JsonRequestBehavior.AllowGet);
+            return Json(myDbContext.Chatrooms, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ChatID([FromBody] Event e)
+        public ActionResult ChatID([FromBody] EventView e)
         {
-            MyDbContext myDbContext = new MyDbContext();
-            var game = myDbContext.Events.Find(e.ID);
-            game.ChatID = e.ChatID;
-            myDbContext.SaveChanges();
+            using (var context = new MyDbContext())
+            {
+                var game = context.Events.Find(e.ID);
+
+                context.Chatrooms.Add(new Chatroom
+                {
+                    ChatID = e.ChatID,
+                    EventID = e.ID
+                });
+
+                context.SaveChanges();
+            }
             return Json(new { success = true, responseText = "Your message successfuly sent!" }, JsonRequestBehavior.AllowGet);
         }
     }

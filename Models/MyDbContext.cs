@@ -13,7 +13,8 @@ namespace Diss.Models
         {
         }
 
+        public DbSet<Chatroom> Chatrooms { get; set; }
         public DbSet<Event> Events { get; set; }
-
+        public DbSet<Chat> Chats { get; set; }
     }
 }

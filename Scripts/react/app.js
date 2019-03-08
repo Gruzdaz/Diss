@@ -18,14 +18,13 @@ class App extends React.Component {
             messages: [],
             events: [],
             roomId: 0,
-            title : ""
         };
         this.sendMessage = this.sendMessage.bind(this);
     }
 
     componentDidMount() {
         fetch('http://localhost:57971/events').then(res => res.json()).then(events =>
-            this.setState({ events: events, title: events.find(item => item.ID === Number(this.props.match.params.eventId)).Name }));
+            this.setState({ events: events }));
         const chatManager = new Chatkit.ChatManager({
             instanceLocator: instanceLocator,
             userId: userId,
@@ -37,14 +36,14 @@ class App extends React.Component {
         chatManager.connect()
             .then(currentUser => {
                 this.currentUser = currentUser;
-                if (!this.state.events.find(item => item.ID === Number(this.props.match.params.eventId)).ChatID) {
+                if (!this.state.events.find(item => item.EventID === Number(this.props.match.params.eventId))) {
                     console.log("AAA");
                     this.currentUser.createRoom({
-                        name: this.state.events.find(item => item.ID === Number(this.props.match.params.eventId)).Name,
+                        name: this.props.match.params.title,
                         private: true,
                         addUserIds: ['Irmantas']
                     }).then(room => {
-                        console.log("BBB");
+                        console.log("BBBB");
                         this.setState({ roomId: room.id });
                         fetch('http://localhost:57971/chatID', {
                             method: 'post',
@@ -71,7 +70,7 @@ class App extends React.Component {
                         });
                 }
                 else {
-                    this.setState({ roomId: this.state.events.find(item => item.ID === Number(this.props.match.params.eventId)).ChatID });
+                    this.setState({ roomId: this.state.events.find(item => item.EventID === Number(this.props.match.params.eventId)).ChatID });
                     this.currentUser.subscribeToRoom(
                         {
                             roomId: this.state.roomId,
@@ -99,7 +98,7 @@ class App extends React.Component {
     render() {
         return (
             <div className="app">
-                <p className="title"> {this.state.title}</p>
+                <p className="title"> {this.props.match.params.title}</p>
                 <MessageList
                     roomId={this.state.roomId}
                     messages={this.state.messages}
@@ -114,6 +113,6 @@ class App extends React.Component {
 
 ReactDOM.render(
     <Router>
-        <Route path='/chat/:eventId' component={App} />
+        <Route path='/chat/:eventId/:title' component={App} />
     </Router>,
     document.getElementById('root'));

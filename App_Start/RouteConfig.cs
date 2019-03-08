@@ -23,7 +23,7 @@ namespace Diss
 
             routes.MapRoute(
                 name: "Chat",
-                url: "chat/{eventId}",
+                url: "chat/{eventId}/{title}",
                 defaults: new { controller = "events", action = "Chat", id = UrlParameter.Optional }
             );
 
