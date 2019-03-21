@@ -370,3 +370,4 @@ C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.csproj.CoreCompi
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.csproj.CopyComplete
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.dll
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.pdb
+C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.csprojAssemblyReference.cache
