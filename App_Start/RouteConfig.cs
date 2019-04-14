@@ -22,9 +22,33 @@ namespace Diss
             );
 
             routes.MapRoute(
+                name: "CurrentUser",
+                url: "CurrentUser",
+                defaults: new { controller = "users", action = "CurrentUser", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Chat",
                 url: "chat/{eventId}/{title}",
                 defaults: new { controller = "events", action = "Chat", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "UsersJson",
+                url: "users",
+                defaults: new { controller = "users", action = "AllUsers" }
+            );
+
+            routes.MapRoute(
+                name: "MatchRoom",
+                url: "MatchRoom",
+                defaults: new { controller = "events", action = "MatchRoom" }
+            );
+
+            routes.MapRoute(
+                name: "UpdateChat",
+                url: "UpdateChat",
+                defaults: new { controller = "events", action = "UpdateChat" }
             );
 
             routes.MapRoute(

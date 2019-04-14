@@ -371,3 +371,6 @@ C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.csproj.CopyCompl
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.dll
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.pdb
 C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.csprojAssemblyReference.cache
+C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.Migrations.ELO.resources
+C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.Migrations.init1.resources
+C:\Users\IrmantasZelionis\source\repos\Diss\Diss\obj\Debug\Diss.Migrations.pref.resources

@@ -535,6 +535,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -635,6 +636,18 @@
     <Compile Include="Migrations\201903081205471_addChatroomId.Designer.cs">
       <DependentUpon>201903081205471_addChatroomId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904040946309_ELO.cs" />
+    <Compile Include="Migrations\201904040946309_ELO.Designer.cs">
+      <DependentUpon>201904040946309_ELO.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904131115039_init1.cs" />
+    <Compile Include="Migrations\201904131115039_init1.Designer.cs">
+      <DependentUpon>201904131115039_init1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904131209022_pref.cs" />
+    <Compile Include="Migrations\201904131209022_pref.Designer.cs">
+      <DependentUpon>201904131209022_pref.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppUserManager.cs" />
     <Compile Include="Models\AppRole.cs" />
@@ -644,6 +657,8 @@
     <Compile Include="Models\MyDbContext.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\PreferencesView.cs" />
+    <Compile Include="ViewModels\ChatroomView.cs" />
     <Compile Include="ViewModels\EventView.cs" />
     <Compile Include="ViewModels\RegisterView.cs" />
     <Compile Include="ViewModels\LoginView.cs" />
@@ -717,6 +732,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903081205471_addChatroomId.resx">
       <DependentUpon>201903081205471_addChatroomId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904040946309_ELO.resx">
+      <DependentUpon>201904040946309_ELO.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904131115039_init1.resx">
+      <DependentUpon>201904131115039_init1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904131209022_pref.resx">
+      <DependentUpon>201904131209022_pref.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

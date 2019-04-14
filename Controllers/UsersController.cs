@@ -85,5 +85,17 @@ namespace Diss.Controllers
             TempData["message"] = "Logout";
             return RedirectToAction("Index", "Events");
         }
+
+        public ActionResult CurrentUser()
+        {
+            var user = HttpContext.User.Identity.Name;
+            return Json(user, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult AllUsers()
+        {
+            MyDbContext myDbContext = new MyDbContext();
+            return Json(myDbContext.Users.Select(u => u.UserName).ToList(), JsonRequestBehavior.AllowGet);
+        }
     }
 }

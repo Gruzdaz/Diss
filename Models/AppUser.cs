@@ -8,5 +8,6 @@ namespace Diss.Models
 {
     public class AppUser : IdentityUser
     {
+        public int ELO { get; set; }
     }
 }

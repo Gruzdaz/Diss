@@ -13,5 +13,7 @@ namespace Diss.ViewModels
         public DateTime Finish { get; set; }
         public string Username { get; set; }
         public int ChatID { get; set; }
+        public bool MixedRoom { get; set; }
+        public bool HomeTeamRoom { get; set; }
     }
 }

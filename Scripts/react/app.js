@@ -1,16 +1,26 @@
-﻿import React from "react";
+﻿import SendMessageForm from "./SendMessageForm";
+import React, { Component } from 'react';
 import ReactDOM from "react-dom";
 import ReactModal from 'react-modal';
-import Chatkit from "@pusher/chatkit";
-import MessageList from "./MessageList";
-import SendMessageForm from "./SendMessageForm";
 import Switch from 'react-toggle-switch';
+import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
+import { default as Chatkit } from '@pusher/chatkit-server';
+import MessageList from './MessageList';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 require("./node_modules/react-toggle-switch/dist/css/switch.min.css"); 
 
+
 const testToken = "https://us1.pusherplatform.io/services/chatkit_token_provider/v1/9d2504dc-ba0c-43b8-ab5b-70d5c16da851/token";
 const instanceLocator = "v1:us1:9d2504dc-ba0c-43b8-ab5b-70d5c16da851";
-const userId = 'Irmantas';
+
+const chatkit = new Chatkit({
+    instanceLocator: "v1:us1:9d2504dc-ba0c-43b8-ab5b-70d5c16da851",
+    key: "9e0b93b8-23d6-4ec4-992f-2d7c561a2616:1xhmQyqlYrXa2AYfmrUJfijFJg4Df5cCtQT753fLtuk="
+});
+
+const tokenProvider = new TokenProvider({
+    url: testToken
+});
 
 const customStyles = {
     content: {
@@ -23,20 +33,22 @@ const customStyles = {
     }
 };
 
+
 ReactModal.setAppElement('#root');
 
-class App extends React.Component {
+class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             messages: [],
             events: [],
             roomId: 0,
+            username: "",
             showModal: true,
             switched: true,
-            username: ""
+            switchedHome: true
         };
-        this.sendMessage = this.sendMessage.bind(this);
+        this.addMessage = this.addMessage.bind(this);
     }
 
     toggleSwitch() {
@@ -47,12 +59,21 @@ class App extends React.Component {
         });
     }
 
-    sendMessage(text) {
-        this.currentUser.sendMessage({
-            text,
-            roomId: this.state.roomId
+    toggleSwitchHome() {
+        this.setState(prevState => {
+            return {
+                switchedHome: !prevState.switchedHome
+            };
         });
- 
+    }
+
+    addMessage(text) {
+        console.log("SENT");
+        this.state.currentUser.sendMessage({
+            text,
+            roomId: this.state.roomId.toString()
+        })
+            .catch(error => console.error('error', error));
     }
 
     handleCloseModal() {
@@ -60,85 +81,42 @@ class App extends React.Component {
         this.connect();
     }
 
-    handleChange(event) {
-        this.setState({username: event.target.value});
-    }
-
-    connect() {
+    createManager(name) {
         fetch('http://localhost:57971/events').then(res => res.json()).then(events =>
             this.setState({ events: events }));
 
-        var tokenProvider = new Chatkit.TokenProvider({
-            url: testToken
-        });
-
-        var Chatkit = require('./node_modules/@pusher/platform-node/target/index');
-
-        const chatkit = new Chatkit.default({
-
-            instanceLocator: 'v1:us1:example',
-
-            key: 'your:key'
-
-        });
-
-        chatkit.createUser({
-
-            id: 'extender',
-
-            name: 'It is an extender',
-
-        })
-
-            .then((user) => {
-
-                console.log('Success', user);
-
-            }).catch((err) => {
-
-                console.log(err);
-
-            });
-
-        const chatManager = new Chatkit.ChatManager({
+        const chatManager = new ChatManager({
             instanceLocator: instanceLocator,
-            userId: "Irmantas",
+            userId: name,
             tokenProvider: tokenProvider
-        });
-
-        fetch('https://us1.pusherplatform.io/services/chatkit/v3/9d2504dc-ba0c-43b8-ab5b-70d5c16da851/users', {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': tokenProvider
-
-            },
-            body: JSON.stringify({ "name": "John Doe", "id": "john", "avatar_url": "https://gravatar.com/img/2124", "custom_data": { "email": "john@example.com" } })
         });
 
         chatManager.connect()
             .then(currentUser => {
                 this.currentUser = currentUser;
-                if (!this.state.events.find(item => item.EventID === Number(this.props.match.params.eventId))) {
+                if (!this.state.events.find(item => item.EventID === Number(this.props.match.params.eventId) && item.MixedRoom === this.state.switched && item.HomeTeamRoom === this.state.switchedHome)) {
                     console.log("AAA");
+                    this.setState({
+                        currentUser: currentUser,
+                    });
                     this.currentUser.createRoom({
                         name: this.props.match.params.title,
-                        private: true,
-                        addUserIds: [this.state.username]
+                        private: false,
+                        addUserIds: [currentUser.id]
                     }).then(room => {
                         console.log("BBBB");
-                        this.setState({ roomId: room.id });
+                        this.setState({ roomId: room.id.toString(), currentRoom: room });
                         fetch('http://localhost:57971/chatID', {
                             method: 'post',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify({ "ChatID": Number(room.id), "ID": Number(this.props.match.params.eventId) })
+                            body: JSON.stringify({ "ChatID": Number(room.id), "ID": Number(this.props.match.params.eventId), "MixedRoom": this.state.switched, "HomeTeamRoom": this.state.switchedHome})
                         }).then(this.currentUser.subscribeToRoom(
                             {
-                                roomId: this.state.roomId,
+                                roomId: this.state.roomId.toString(),
                                 hooks: {
-                                    onNewMessage: message => {
+                                    onMessage: message => {
 
                                         this.setState({
                                             messages: [...this.state.messages, message]
@@ -153,60 +131,105 @@ class App extends React.Component {
                         });
                 }
                 else {
-                    this.setState({ roomId: this.state.events.find(item => item.EventID === Number(this.props.match.params.eventId)).ChatID });
-                    this.currentUser.subscribeToRoom(
-                        {
-                            roomId: this.state.roomId,
-                            hooks: {
-                                onNewMessage: message => {
-
-                                    this.setState({
-                                        messages: [...this.state.messages, message]
-                                    });
-                                }
-                            }
+                    fetch('http://localhost:57971/MatchRoom', {
+                        method: 'post',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ "SupportsHomeTeam": this.state.switchedHome, "AllowsMixedRooms": this.state.switched, "EventID": Number(this.props.match.params.eventId) })
+                    }).then(res => res.json()).then(roomID => 
+                    this.setState({
+                            currentUser: currentUser,
+                            roomId: roomID
+                    }));
+                    chatkit.getRoom({
+                        roomId: this.state.roomId
+                    }).then(room => {
+                        console.log(room);
+                        fetch('http://localhost:57971/UpdateChat', {
+                            method: 'post',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ "ChatID": Number(this.state.roomId), "EventID": Number(this.props.match.params.eventId), "Users": room.member_user_ids })
                         });
+                        });
+                    return currentUser.subscribeToRoom({
+                        roomId: this.state.roomId.toString(),
+                        hooks: {
+                            onMessage: message => {
+                                this.setState({
+                                    messages: [...this.state.messages, message]
+                                });
+                            }
+                        }
+                    }).then(currentRoom => {
+                        this.setState({
+                            currentRoom,
+                            users: currentRoom.userIds
+                        });
+                    })
+                        .catch(error => console.log(error))
                 }
             });
     }
 
-    render() {
-        return (
-            <div className="app">
-                <p className="title"> {this.props.match.params.title}</p>
-                <MessageList
-                    roomId={this.state.roomId}
-                    messages={this.state.messages}
-                />
-                <SendMessageForm
-                    sendMessage={this.sendMessage}
-                />
+    createUser(name) {
+        fetch('http://localhost:57971/Users').then(res => res.json()).then(users => {
+                chatkit.createUser({
+                    id: name,
+                    name: name
+                }).catch((err) => {
+                    console.log(err.status);
+                }
+                ).then(currentUser => {
+                    this.setState(currentUser);
+                    this.createManager(name);
+                });
+        });
+    }
 
+    connect() {
+
+        fetch('http://localhost:57971/currentUser').then(res => res.json()).then(user =>
+            this.createUser(user));
+    }
+
+
+    render() {
+            return (
+                <div className="app">
+                    <p className="title"> {this.props.match.params.title}</p>
+                    <MessageList
+                        messages={this.state.messages}
+                    />
+                    <SendMessageForm
+                        sendMessage={this.addMessage}
+                    />
                 <ReactModal
                     isOpen={this.state.showModal}
                     contentLabel="Modal #1 Global Style Override Example"
                     onRequestClose={this.handleCloseModal.bind(this)}
                     style={customStyles}
                 >
-                    <div>
-                        <label>
-                            Display Name: 
-                            <input onChange={this.handleChange.bind(this)} className="ml-1 form-group" type="text" name="name" />
-                        </label>
-                    </div>
-                        <label>
-                            Match with opponent team fans: 
+                <div>
+                <label>
+                    Supporting home team:
+                </label>
+                <Switch className="align-middle ml-1 pull-right" onClick={this.toggleSwitchHome.bind(this)} on={this.state.switchedHome} />
+                </div>
+                    <label>
+                        Match with opponent team fans:
                         </label>
                     <Switch className="align-middle ml-1" onClick={this.toggleSwitch.bind(this)} on={this.state.switched} />
                     <div>
                         <button className="btn btn-primary" onClick={this.handleCloseModal.bind(this)}>Submit</button>
                     </div>
                 </ReactModal>
-            </div>
-
-        );
+                </div>
+            );
+        }
     }
-}
 
 ReactDOM.render(
     <Router>
