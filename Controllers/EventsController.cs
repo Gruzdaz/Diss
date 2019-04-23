@@ -72,7 +72,7 @@ namespace Diss.Controllers
 
                 var user = HttpContext.User.Identity.Name;
 
-                var chatroom = context.Chatrooms.Where(c => c.ChatID == e.ChatID && c.EventID == e.EventID).FirstOrDefault();
+                var chatroom = context.Chatrooms.ToList().Where(c => c.ChatID == e.ChatID && c.EventID == e.EventID).FirstOrDefault();
 
                 var userELO = context.Users.Where(u => user == u.UserName).Select(u => u.ELO).FirstOrDefault();
                 if (!e.Users.Contains(user)){
@@ -102,7 +102,7 @@ namespace Diss.Controllers
 
                 int closestELO = chatrooms.Select(c => c.AverageELO).Aggregate((x, y) => Math.Abs(x - userELO) < Math.Abs(y - userELO) ? x : y);
 
-                var roomID = context.Chatrooms.Where(c => c.AverageELO == closestELO).FirstOrDefault();
+                var roomID = context.Chatrooms.Where(c => c.AverageELO == closestELO).FirstOrDefault().ChatID;
 
                 return Json(roomID, JsonRequestBehavior.AllowGet);
             }

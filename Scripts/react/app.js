@@ -1,4 +1,5 @@
 ﻿import SendMessageForm from "./SendMessageForm";
+import UsersList from "./UsersList";
 import React, { Component } from 'react';
 import ReactDOM from "react-dom";
 import ReactModal from 'react-modal';
@@ -46,7 +47,9 @@ class App extends Component {
             username: "",
             showModal: true,
             switched: true,
-            switchedHome: true
+            switchedHome: true,
+            currentRoom: [],
+            users: []
         };
         this.addMessage = this.addMessage.bind(this);
     }
@@ -68,12 +71,10 @@ class App extends Component {
     }
 
     addMessage(text) {
-        console.log("SENT");
         this.state.currentUser.sendMessage({
             text,
             roomId: this.state.roomId.toString()
-        })
-            .catch(error => console.error('error', error));
+        });
     }
 
     handleCloseModal() {
@@ -95,23 +96,22 @@ class App extends Component {
             .then(currentUser => {
                 this.currentUser = currentUser;
                 if (!this.state.events.find(item => item.EventID === Number(this.props.match.params.eventId) && item.MixedRoom === this.state.switched && item.HomeTeamRoom === this.state.switchedHome)) {
-                    console.log("AAA");
                     this.setState({
                         currentUser: currentUser,
+                        users: currentUser.users
                     });
                     this.currentUser.createRoom({
                         name: this.props.match.params.title,
                         private: false,
                         addUserIds: [currentUser.id]
                     }).then(room => {
-                        console.log("BBBB");
                         this.setState({ roomId: room.id.toString(), currentRoom: room });
                         fetch('http://localhost:57971/chatID', {
                             method: 'post',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify({ "ChatID": Number(room.id), "ID": Number(this.props.match.params.eventId), "MixedRoom": this.state.switched, "HomeTeamRoom": this.state.switchedHome})
+                            body: JSON.stringify({ "ChatID": Number(room.id), "ID": Number(this.props.match.params.eventId), "MixedRoom": this.state.switched, "HomeTeamRoom": this.state.switchedHome })
                         }).then(this.currentUser.subscribeToRoom(
                             {
                                 roomId: this.state.roomId.toString(),
@@ -131,47 +131,68 @@ class App extends Component {
                         });
                 }
                 else {
+                    this.setState({
+                        currentUser: this.currentUser,
+                        users: this.currentUser.users
+                    });
+
                     fetch('http://localhost:57971/MatchRoom', {
                         method: 'post',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({ "SupportsHomeTeam": this.state.switchedHome, "AllowsMixedRooms": this.state.switched, "EventID": Number(this.props.match.params.eventId) })
-                    }).then(res => res.json()).then(roomID => 
-                    this.setState({
-                            currentUser: currentUser,
-                            roomId: roomID
-                    }));
-                    chatkit.getRoom({
-                        roomId: this.state.roomId
-                    }).then(room => {
-                        console.log(room);
-                        fetch('http://localhost:57971/UpdateChat', {
-                            method: 'post',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ "ChatID": Number(this.state.roomId), "EventID": Number(this.props.match.params.eventId), "Users": room.member_user_ids })
-                        });
-                        });
-                    return currentUser.subscribeToRoom({
-                        roomId: this.state.roomId.toString(),
-                        hooks: {
-                            onMessage: message => {
-                                this.setState({
-                                    messages: [...this.state.messages, message]
-                                });
-                            }
-                        }
-                    }).then(currentRoom => {
-                        this.setState({
-                            currentRoom,
-                            users: currentRoom.userIds
-                        });
                     })
-                        .catch(error => console.log(error))
+                        .then(res => res.json()).then(roomID => {
+                            this.setState({
+                                roomId: roomID.toString()
+                            });
+                            this.joinRoom(this.state.roomId.toString());
+                        });
                 }
             });
+    }
+
+    updateChat() {
+        if (this.state.currentRoom.member_user_ids === undefined) {
+            setTimeout(this.updateChat, 1500);
+        }
+        fetch('http://localhost:57971/UpdateChat', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "ChatID": Number(this.state.roomId), "EventID": Number(this.props.match.params.eventId), "Users": this.state.currentRoom.member_user_ids })
+        });
+    }
+
+    joinRoom(roomId) {
+        console.log("JOIN:" + roomId);
+        chatkit.getRoom({
+            roomId: roomId.toString()
+        }).then(room => {
+            this.setState({ currentRoom: room });
+            console.log("ROOM:" + roomId);
+            //this.setState({ users: room.member_user_ids });
+            this.updateChat();
+        });
+
+        this.state.currentUser.subscribeToRoom({
+                roomId: this.state.roomId,
+                hooks: {
+                    onMessage: message => {
+                        this.setState({
+                            messages: [...this.state.messages, message],
+                            users: this.state.currentUser.users
+                        });
+                    }
+                }
+            }).then(currentRoom => {
+            this.setState({
+                currentRoom
+            });
+        })
+        .catch(error => console.log(error));
     }
 
     createUser(name) {
@@ -200,11 +221,15 @@ class App extends Component {
             return (
                 <div className="app">
                     <p className="title"> {this.props.match.params.title}</p>
+                    <UsersList
+                        users={this.state.users}
+                    />
                     <MessageList
                         messages={this.state.messages}
                     />
                     <SendMessageForm
                         sendMessage={this.addMessage}
+
                     />
                 <ReactModal
                     isOpen={this.state.showModal}
